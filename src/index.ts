@@ -17,10 +17,11 @@ app.get("/data-client/:numTell",async(req:Request,resp:Response)=>{
             consumoDados:userData.consumo_dados,
             consumoMin:userData.consumo_minutos,
             consumoSMS:userData.consumo_sms,
-            plano:userData.plano_nome
+            plano:userData.plano_nome,
+            status:userData.simcard_status
         }
         resp.send(myResponse);
     }catch(err:any){
-        resp.send(err.message)
+        resp.send(undefined)
     }
 })

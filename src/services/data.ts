@@ -19,6 +19,6 @@ export const dataBase = async () => {
         
         return data.results
     }catch(err){
-        return err;
+        throw err;
     }
 }
