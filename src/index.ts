@@ -1,8 +1,8 @@
-import { ClientOutputData } from './model/ClientModel';
-import axios from "axios";
+import { ClientOutputData, ClientInputEmail } from './model/ClientModel';
 import { Request, Response } from "express";
 import app from "./server";
 import { dataBase } from "./services/data";
+import { EmailServer } from './services/emailServer';
 
 app.get("/data-client/:numTell",async(req:Request,resp:Response)=>{
     const numTell=req.params.numTell;
@@ -24,4 +24,34 @@ app.get("/data-client/:numTell",async(req:Request,resp:Response)=>{
     }catch(err:any){
         resp.send(undefined)
     }
+
 })
+
+app.post("/send-email",async(req:Request,resp:Response)=>{
+    
+    try{
+        const {name,whatsApp,email,street,num,district,city,description}=req.body
+        if (!name|| !whatsApp|| !email|| !street|| !num|| !district|| !city|| !description){
+            throw new Error("Erro de dados!");
+        }
+        const newEmail:ClientInputEmail={
+           nome: req.body.name,
+           whatsapp: req.body.whatsApp,
+           email: req.body.email,
+           rua: req.body.street,
+           numero: req.body.num,
+           bairro: req.body.district,
+           cidade: req.body.city,
+           descricao:req.body.description
+        }
+    
+        console.log(newEmail);
+        await EmailServer(newEmail);
+        resp.send(`Email enviado para ${newEmail.email}!`);
+    }catch(err:any){
+        resp.send(err.message);
+    }
+
+})
+
+

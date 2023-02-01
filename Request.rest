@@ -14,3 +14,18 @@ content-type: application/json
 #### consumo listados
 GET  http://localhost:3003/data-client/88935001928
 content-type: application/json
+
+######## email
+POST http://localhost:3003/send-email
+content-type: application/json
+
+{
+    "name":"Teste2",
+    "whatsApp":"3232323232",
+    "email":"teste2@teste2.com",
+    "street":"rua dos teste2s",
+    "num":"001",
+    "district":"Bairro dos teste2s",
+    "city":"city Teste2",
+    "description":"Estamos Fazendo um teste2!!!"
+}
