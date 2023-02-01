@@ -32,7 +32,7 @@ app.post("/send-email",async(req:Request,resp:Response)=>{
     try{
         const {name,whatsApp,email,street,num,district,city,description}=req.body
         if (!name|| !whatsApp|| !email|| !street|| !num|| !district|| !city|| !description){
-            throw new Error("Erro de dados!");
+            throw new Error("Erro de dados! Verifique se os caampos estão preenchidos corretamente!");
         }
         const newEmail:ClientInputEmail={
            nome: req.body.name,
@@ -47,7 +47,7 @@ app.post("/send-email",async(req:Request,resp:Response)=>{
     
         console.log(newEmail);
         await EmailServer(newEmail);
-        resp.send(`Email enviado para ${newEmail.email}!`);
+        resp.send(`Email enviado com sucesso! SobralNet Movel agradece pelo contato! Em breve retornaremos o contato!`);
     }catch(err:any){
         resp.send(err.message);
     }

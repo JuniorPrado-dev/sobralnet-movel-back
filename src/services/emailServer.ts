@@ -1,33 +1,37 @@
 import { ClientInputEmail } from './../model/ClientModel';
 import nodemailer from "nodemailer"
+import dotenv from 'dotenv'
 
-export const EmailServer = (newEmail: ClientInputEmail) => {
+dotenv.config();
 
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'sobralnetmovel@gmail.com',
-            pass: 'diebcvfbxmmppcxh'
-        }
-    });
+export const EmailServer = async (newEmail: ClientInputEmail) => {
+    try {
 
-    const mailOptions = {
-        from: 'sobralnetmovel@gmail.com',
-        to: 'juniorcvnnn@gmail.com',
-        subject: 'Sending Email using Node.js',
-        html: `
-        <h1>Nova Mensagem</h1>
-        <h2>Dados Pessoais</h2>
-        <p>--------------------------</p>
-        <h3>Nome:</h3>
-        <p>${newEmail.nome}</p>
-        <h3>WhatsApp:</h3>
-        <p>${newEmail.whatsapp}</p>
-        <h3>Email:</h3>
-        <p>${newEmail.email}</p>
-        <h2>Endereço</h2>
-        <p>--------------------------</p>
-        <h3>Rua:</h3>
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: `${process.env.USER}`,
+                pass: `${process.env.PASS}`
+            }
+        });
+
+        const mailOptions = {
+            from: 'sobralnetmovel@gmail.com',
+            to: 'sac@sobralnet.com.br, sobralnet@sobralnet.com.br',
+            subject: `Nova Solicitação! ${new Date().toDateString()}`,
+            html: `
+            <h1>Nova Mensagem</h1>
+            <h2>Dados Pessoais</h2>
+            <p>--------------------------</p>
+            <h3>Nome:</h3>
+            <p>${newEmail.nome}</p>
+            <h3>WhatsApp:</h3>
+            <p>${newEmail.whatsapp}</p>
+            <h3>Email:</h3>
+            <p>${newEmail.email}</p>
+            <h2>Endereço</h2>
+            <p>--------------------------</p>
+            <h3>Rua:</h3>
         <p>${newEmail.rua}</p>
         <h3>Nº:</h3>
         <p>${newEmail.numero}</p>
@@ -39,14 +43,18 @@ export const EmailServer = (newEmail: ClientInputEmail) => {
         <p>--------------------------</p>
         <p>${newEmail.descricao}</p>
         `
-    };
+        };
+        //VERIFICA serviço de EMAIL
+        await transporter.verify(function (error, success) {
+            if (error) {
+                console.log(error);
+            }
+        });
+        return await transporter.sendMail(mailOptions);
 
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
+    } catch (err: any) {
+        console.log(err.message);
+        throw new Error("Erro de servidor de email")
+    }
 
 }
