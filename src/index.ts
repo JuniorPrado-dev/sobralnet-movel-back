@@ -5,10 +5,10 @@ import { dataBase } from "./services/data";
 import { EmailServer } from './services/emailServer';
 
 app.get("/data-client",async(req:Request,resp:Response)=>{
-    const numTell=req.body.numTell;
-    const id=req.body.id;
+    const numTell=req.query.numTell;
+    const id=req.query.id;
     
-    console.log(numTell);
+    // console.log(numTell);
     
     try{
         if(!numTell){
@@ -34,7 +34,7 @@ app.get("/data-client",async(req:Request,resp:Response)=>{
         }
         resp.send(myResponse);
     }catch(err:any){
-        resp.send(err.message)
+        resp.send(undefined)
     }
 
 })
