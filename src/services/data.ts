@@ -5,10 +5,11 @@ dotenv.config();
 
 export const dataBase = async () => {
     let data: any;
+    const periodoAtual=new Date().toISOString().slice(0,7);
     try {
         await axios.post(`https://easy2use.com.br/mvno/api/public/consumo-consolidado?user_token={${process.env.TOTEN}}`,
             {
-                periodo: "2023-01"
+                periodo: periodoAtual
             }, {
             headers: {
                 'content-Type': 'application/json',

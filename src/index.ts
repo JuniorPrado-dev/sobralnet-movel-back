@@ -4,14 +4,26 @@ import app from "./server";
 import { dataBase } from "./services/data";
 import { EmailServer } from './services/emailServer';
 
-app.get("/data-client/:numTell",async(req:Request,resp:Response)=>{
-    const numTell=req.params.numTell;
+app.get("/data-client",async(req:Request,resp:Response)=>{
+    const numTell=req.body.numTell;
+    const id=req.body.id;
+    
     console.log(numTell);
     
     try{
+        if(!numTell){
+            throw new Error("Numero iválido");
+        }
+        if(!id){
+            throw new Error("Indentificação inválida");
+        }
         const data =await dataBase()
-
-        const userData=data.find((user:any)=>user.telefone===numTell)
+        
+        const userData=data.find((user:any)=>(user.telefone===numTell && user.cliente_cnpj_cpf===id))
+        
+        if(!userData){
+            throw new Error("Ciente não encontrado!")
+        }
         const myResponse:ClientOutputData={
             nome:userData.cliente_nome,
             consumoDados:userData.consumo_dados,
@@ -22,7 +34,7 @@ app.get("/data-client/:numTell",async(req:Request,resp:Response)=>{
         }
         resp.send(myResponse);
     }catch(err:any){
-        resp.send(undefined)
+        resp.send(err.message)
     }
 
 })
@@ -53,5 +65,4 @@ app.post("/send-email",async(req:Request,resp:Response)=>{
     }
 
 })
-
 
