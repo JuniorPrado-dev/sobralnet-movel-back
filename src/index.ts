@@ -4,11 +4,24 @@ import app from "./server";
 import { dataBase } from "./services/data";
 import { EmailServer } from './services/emailServer';
 
+app.get("/teste",async(req:Request,resp:Response)=>{
+    
+    // console.log(numTell);
+    
+    try{
+    
+        resp.send("Serviço ok!");
+    }catch(err:any){
+        resp.send(undefined)
+    }
+
+})
 app.get("/data-client",async(req:Request,resp:Response)=>{
     const numTell=req.query.numTell;
     const id=req.query.id;
     
-    // console.log(numTell);
+    console.log("cheguei");
+    console.log(numTell);
     
     try{
         if(!numTell){
