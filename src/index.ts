@@ -33,6 +33,8 @@ app.get("/data-client",async(req:Request,resp:Response)=>{
         }
         const data =await dataBase()
         
+        console.log({data});
+        
         const userData=data.find((user:any)=>(user.telefone===numTell && user.cliente_cnpj_cpf===id))
         
         if(!userData){
@@ -70,7 +72,7 @@ app.post("/send-email",async(req:Request,resp:Response)=>{
            cidade: req.body.city,
            descricao:req.body.description
         }
-    
+        
         console.log(newEmail);
         await EmailServer(newEmail);
         resp.send(`Email enviado com sucesso! SobralNet Movel agradece pelo contato! Em breve retornaremos o contato!`);
