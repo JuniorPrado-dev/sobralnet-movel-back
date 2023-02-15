@@ -11,7 +11,7 @@ app.use(express.json())
 
 app.use(cors())
 try{
-    const server = app.listen(3003||3004||3007||3008, () => {
+    const server = app.listen(3004||3003||3007||3008, () => {
             const address=server.address() as AddressInfo;
             console.log(`server is runisng on port ${address.port}`)
         }  
