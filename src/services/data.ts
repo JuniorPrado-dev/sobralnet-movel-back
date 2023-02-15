@@ -6,7 +6,11 @@ dotenv.config();
 export const dataBase = async () => {
     let data: any;
     const periodoAtual=new Date().toISOString().slice(0,7);
+    console.log({periodoAtual});
+    
     try {
+        console.log(process.env.TOTEN);
+        
         await axios.post(`https://easy2use.com.br/mvno/api/public/consumo-consolidado?user_token={${process.env.TOTEN}}`,
             {
                 periodo: periodoAtual
