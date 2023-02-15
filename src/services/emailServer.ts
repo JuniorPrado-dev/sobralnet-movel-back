@@ -20,8 +20,8 @@ export const EmailServer = async (newEmail: ClientInputEmail) => {
 
         const mailOptions = {
             from: 'sobralnetmovel@gmail.com',
-            //to: 'sac@sobralnet.com.br',
-            to:"juniorcvnnn@gmail.com",
+            to: 'sac@sobralnet.com.br',
+            // to:"juniorcvnnn@gmail.com",
             subject: `Nova Solicitação! ${new Date().toDateString()}`,
             html: `
             <h1>Nova Mensagem</h1>
