@@ -20,8 +20,9 @@ app.get("/data-client",async(req:Request,resp:Response)=>{
     const numTell=req.query.numTell;
     const id=req.query.id;
     
-    // console.log("cheguei");
-    // console.log(numTell);
+    console.log("cheguei");
+    console.log({numTell});
+    console.log({id});
     
     try{
         if(!numTell){
